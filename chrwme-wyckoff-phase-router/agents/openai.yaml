@@ -1,0 +1,4 @@
+interface:
+  display_name: "Chrwme Wyckoff 阶段分流"
+  short_description: "区分初始区间后半程与再积累、再派发"
+  default_prompt: "Use $chrwme-wyckoff-phase-router to distinguish initial range completion from reaccumulation or redistribution."

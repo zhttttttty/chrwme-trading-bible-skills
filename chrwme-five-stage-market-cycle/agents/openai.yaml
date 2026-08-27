@@ -1,0 +1,4 @@
+interface:
+  display_name: "Chrwme 五阶段市场循环"
+  short_description: "映射作者多空模型的阶段、缺口与失效条件"
+  default_prompt: "Use $chrwme-five-stage-market-cycle to map this setup to the five-stage bullish or bearish model."

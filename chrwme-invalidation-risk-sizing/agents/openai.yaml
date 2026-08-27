@@ -1,0 +1,4 @@
+interface:
+  display_name: "Chrwme 失效点仓位管理"
+  short_description: "从结构失效点反推止损距离与仓位上限"
+  default_prompt: "Use $chrwme-invalidation-risk-sizing to derive position-size inputs from this thesis and structural invalidation."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Chrwme 期望值证据循环"
+  short_description: "用期望值、回测与前测维护策略证据"
+  default_prompt: "Use $chrwme-expectancy-evidence-loop to audit this strategy's expectancy and evidence-update plan."

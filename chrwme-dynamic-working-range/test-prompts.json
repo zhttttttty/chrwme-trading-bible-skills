@@ -1,0 +1,15 @@
+{
+  "skill": "chrwme-dynamic-working-range",
+  "version": "0.1.0",
+  "source_book": "Chrwme Trading Bible — Chrwme",
+  "darwin_compatible": true,
+  "test_cases": [
+    {"id":"should-trigger-01","type":"should_trigger","prompt":"价格短暂突破 PDH 又回到下方，今天的 PDH-PDL working range 还能保留吗？","expected_behavior":"调用本 skill，将原区间视为暂时仍有参考价值并列出重估条件。","notes":"Sweep 后保留"},
+    {"id":"should-trigger-02","type":"should_trigger","prompt":"突破 PDH 后三个小时都在上面交易，回踩也没跌回，Daily Bias 要不要重置？","expected_behavior":"调用本 skill，把持续 Acceptance 作为区间迁移证据并重估 Bias。","notes":"Acceptance"},
+    {"id":"should-trigger-03","type":"should_trigger","prompt":"怎样用前日高低点建立今天的动态工作区间？","expected_behavior":"调用本 skill，要求 PDH、PDL、当前价和时段，并输出区间状态。","notes":"基准建立"},
+    {"id":"should-not-trigger-01","type":"should_not_trigger","prompt":"扫过 PDL、收复、MSS 和回撤区域都齐了，具体反转计划怎么检查？","expected_behavior":"不应以本 skill 为主，应调用 chrwme-pdh-pdl-reversal-executor。","notes":"兄弟 skill 混淆：执行"},
+    {"id":"should-not-trigger-02","type":"should_not_trigger","prompt":"等高点被扫后没有结构确认，是反转还是延续？","expected_behavior":"不应以本 skill 为主，应调用 chrwme-liquidity-sweep-router。","notes":"兄弟 skill 混淆：通用 Sweep"},
+    {"id":"edge-01","type":"edge_case","prompt":"比特币 24 小时交易，PDH/PDL 的日切应该按哪个时区？","expected_behavior":"调用本 skill 但先要求用户定义一致的交易日边界，不得默认唯一时区。","notes":"市场制度边界"}
+  ],
+  "minimum_pass_rate": 0.8
+}

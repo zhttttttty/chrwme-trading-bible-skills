@@ -1,0 +1,4 @@
+interface:
+  display_name: "Chrwme 动态工作区间"
+  short_description: "管理 PDH/PDL 区间保留、失效与迁移"
+  default_prompt: "Use $chrwme-dynamic-working-range to decide whether the PDH/PDL working range remains valid or must move."

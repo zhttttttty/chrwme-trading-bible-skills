@@ -1,0 +1,4 @@
+interface:
+  display_name: "Chrwme Wyckoff 区间分类"
+  short_description: "按供需事件链区分吸筹、派发与未定区间"
+  default_prompt: "Use $chrwme-wyckoff-range-classifier to classify this range as accumulation, distribution, or unresolved."

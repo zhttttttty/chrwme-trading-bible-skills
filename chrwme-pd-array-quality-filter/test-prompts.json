@@ -1,0 +1,15 @@
+{
+  "skill": "chrwme-pd-array-quality-filter",
+  "version": "0.1.0",
+  "source_book": "Chrwme Trading Bible — Chrwme",
+  "darwin_compatible": true,
+  "test_cases": [
+    {"id":"should-trigger-01","type":"should_trigger","prompt":"这根反向 K 线之后有位移和结构突破，它能算有效 Order Block 吗？","expected_behavior":"调用本 skill，先验证 OB 定义，再检查高周期方向、目标与失效。","notes":"OB 质量"},
+    {"id":"should-trigger-02","type":"should_trigger","prompt":"Candle 1 和 Candle 3 不重叠，但前面没有流动性事件，这个 FVG 值得跟踪吗？","expected_behavior":"调用本 skill，区分机械定义成立与上下文质量不足。","notes":"FVG 分层"},
+    {"id":"should-trigger-03","type":"should_trigger","prompt":"旧的 Bullish OB 被空头位移跌穿，反弹从下方回测，是否属于 Bearish Breaker？","expected_behavior":"调用本 skill，核对前置 OB、明确失效、反向位移和反侧回测链。","notes":"Breaker 验证"},
+    {"id":"should-not-trigger-01","type":"should_not_trigger","prompt":"这个突破是 CHoCH、MSS 还是 BOS？","expected_behavior":"不应调用本 skill，应调用 chrwme-structure-state-classifier。","notes":"兄弟 skill 混淆：结构"},
+    {"id":"should-not-trigger-02","type":"should_not_trigger","prompt":"这个 Setup 止损 40 点，账户风险固定 500 美元，合约数怎么定？","expected_behavior":"不应调用本 skill，应调用 chrwme-invalidation-risk-sizing。","notes":"兄弟 skill 混淆：风险"},
+    {"id":"edge-01","type":"edge_case","prompt":"同一区域同时是 OB 和 FVG，但逆高周期方向，也没有清晰目标，可以做吗？","expected_behavior":"调用本 skill，将其判为标签成立但上下文不足，不因重叠标签自动升级。","notes":"标签共振诱惑"}
+  ],
+  "minimum_pass_rate": 0.8
+}
