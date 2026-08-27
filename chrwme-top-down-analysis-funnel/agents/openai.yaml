@@ -1,4 +1,0 @@
-interface:
-  display_name: "Chrwme 多周期分析漏斗"
-  short_description: "分离高周期背景、中周期区域与低周期执行"
-  default_prompt: "Use $chrwme-top-down-analysis-funnel to organize this setup across higher, middle, and execution timeframes."

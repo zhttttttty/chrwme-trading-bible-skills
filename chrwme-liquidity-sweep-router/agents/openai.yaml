@@ -1,4 +1,0 @@
-interface:
-  display_name: "Chrwme 流动性扫取路由"
-  short_description: "区分 Sweep 后的反转、延续与等待情景"
-  default_prompt: "Use $chrwme-liquidity-sweep-router to classify what this liquidity sweep does and does not confirm."

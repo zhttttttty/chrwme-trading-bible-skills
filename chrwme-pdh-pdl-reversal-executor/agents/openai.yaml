@@ -1,4 +1,0 @@
-interface:
-  display_name: "Chrwme PDH/PDL 反转执行"
-  short_description: "核对昨高昨低扫取后的完整反转条件链"
-  default_prompt: "Use $chrwme-pdh-pdl-reversal-executor to verify whether this PDH or PDL reversal setup is complete."

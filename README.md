@@ -1,6 +1,6 @@
 # Chrwme Trading Bible Skills for Codex
 
-一套从 **Chrwme Trading Bible Technical Revision** 提炼出的 11 个原子化 Codex skills，用于把 SMC、市场结构、流动性、PDH/PDL、Wyckoff、风险管理和策略验证组织成可执行、可否定、可复盘的分析流程。
+一个从 **Chrwme Trading Bible Technical Revision** 提炼出的 Codex skill，内含 11 个按需加载的分析模块，用于把 SMC、市场结构、流动性、PDH/PDL、Wyckoff、风险管理和策略验证组织成可执行、可否定、可复盘的分析流程。
 
 这不是简单的书籍摘要。每个 skill 都有清晰的触发边界、执行步骤、失效条件、反例和测试用例，重点避免以下常见误用：
 
@@ -20,9 +20,9 @@
 - 输入不足时在当前关卡停止，不让后续模块编造入场、仓位或统计结论；
 - 最终只输出一份合并后的分析，不把 11 份回答直接堆给用户。
 
-因此，普通用户只安装 `chrwme-trading-system` 即可。仓库中的 11 个独立 skill 继续保留，供开发、调试或希望手动调用单一能力的用户使用。
+仓库只发布 `chrwme-trading-system` 这一个入口；11 个能力作为内部模块随总 skill 一起安装，不会在 Codex 中显示为 11 个独立入口。
 
-## Skills
+## 内部模块
 
 | Skill | 用途 |
 |---|---|
@@ -50,32 +50,12 @@ Top-down 背景
   → Expectancy 与证据更新
 ```
 
-这些 skills 采用组合式设计。单个 skill 只负责一个明确判断，复杂问题可以依次调用多个 skill，减少一个大型提示词同时承担方向、入场、仓位和统计验证所产生的冲突。
+这些模块采用组合式设计。每个模块只负责一个明确判断，总入口根据问题依次加载所需模块，减少一个大型提示词同时承担方向、入场、仓位和统计验证所产生的冲突。
 
 ## 安装
 
-### 安装一体化版本（推荐）
-
 ```powershell
 Copy-Item -LiteralPath '.\chrwme-trading-system' `
-  -Destination (Join-Path $env:USERPROFILE '.codex\skills') `
-  -Recurse
-```
-
-### 安装全部独立 skills
-
-克隆仓库后，在 PowerShell 中运行：
-
-```powershell
-$target = Join-Path $env:USERPROFILE '.codex\skills'
-Get-ChildItem -Directory -Filter 'chrwme-*' |
-  Copy-Item -Destination $target -Recurse
-```
-
-### 安装单个 skill
-
-```powershell
-Copy-Item -LiteralPath '.\chrwme-liquidity-sweep-router' `
   -Destination (Join-Path $env:USERPROFILE '.codex\skills') `
   -Recurse
 ```
@@ -90,11 +70,9 @@ Copy-Item -LiteralPath '.\chrwme-liquidity-sweep-router' `
 并列出什么证据会确认或推翻当前判断。
 ```
 
-该问题通常先触发 `chrwme-liquidity-sweep-router`；若随后出现完整的 PDL Reversal 条件，再交给 `chrwme-pdh-pdl-reversal-executor`。涉及仓位时，继续调用 `chrwme-invalidation-risk-sizing`，而不是让前两个 skill 猜测风险比例或合约点值。
+总入口通常先加载 `liquidity-sweep-router`；若随后出现完整的 PDL Reversal 条件，再加载 `pdh-pdl-reversal-executor`。涉及仓位时继续加载 `invalidation-risk-sizing`，而不是让前两个模块猜测风险比例或合约点值。
 
 ## 结构
-
-一体化版本：
 
 ```text
 chrwme-trading-system/
@@ -109,31 +87,17 @@ chrwme-trading-system/
 └── test-results.md
 ```
 
-独立版本：
-
-每个 skill 目录包含：
-
-```text
-chrwme-*/
-├── SKILL.md
-├── agents/
-│   └── openai.yaml
-├── test-prompts.json
-└── test-results.md
-```
-
-- `SKILL.md`：触发范围、方法、执行步骤、边界和相邻 skill 路由。
+- `SKILL.md`：总入口、自动路由、依赖顺序和停止条件。
 - `agents/openai.yaml`：Codex 展示与调用元数据。
-- `test-prompts.json`：3 个应触发、2 个不应触发、1 个边界用例。
-- `test-results.md`：对应盲测结果。
+- `references/modules/`：11 个内部分析模块。
+- `test-prompts.json`：组合路由、拒绝和缺失输入用例。
+- `test-results.md`：总入口路由审计结果。
 
 ## 测试与审计
 
-- 11 个 skill 均通过 Codex `quick_validate.py`。
-- 每个 skill 包含 6 条测试，共 66 条。
-- 测试由三组独立子代理进行盲测，最终 66/66 通过。
-- 其中包含 22 条相邻 skill 混淆用例，用于验证拒绝和路由能力。
-- 一体化 `chrwme-trading-system` 也通过 `quick_validate.py`，包含 12 条组合路由、拒绝和缺失输入测试。
+- 打包前，11 个模块来源均通过 Codex `quick_validate.py`。
+- 原子模块阶段共完成 66 条独立盲测，最终 66/66 通过，其中包含 22 条相邻模块混淆用例。
+- 当前发布的一体化 `chrwme-trading-system` 通过 `quick_validate.py`，并包含 12 条组合路由、拒绝和缺失输入测试。
 
 这些测试验证的是 skill 的触发、拒绝和执行边界，不证明交易方法本身具有统计优势。
 

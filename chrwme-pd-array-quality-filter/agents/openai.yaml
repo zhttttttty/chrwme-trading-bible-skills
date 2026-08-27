@@ -1,4 +1,0 @@
-interface:
-  display_name: "Chrwme PD Array 质量筛选"
-  short_description: "验证 OB、FVG、Breaker 的定义与上下文质量"
-  default_prompt: "Use $chrwme-pd-array-quality-filter to validate and rank these OB, FVG, or Breaker zones."

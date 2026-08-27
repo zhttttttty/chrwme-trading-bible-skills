@@ -15,7 +15,7 @@
 5. 只有在失效点、入场距离、仓位上限和退出逻辑都可定义时，才进入执行评估。
 6. 用样本外前测、费用后的结果和版本化记录更新系统证据。
 
-对应 skill：[`chrwme-top-down-analysis-funnel`](../chrwme-top-down-analysis-funnel/SKILL.md)、[`chrwme-structure-state-classifier`](../chrwme-structure-state-classifier/SKILL.md)。
+对应模块：[`chrwme-top-down-analysis-funnel`](../chrwme-trading-system/references/modules/chrwme-top-down-analysis-funnel.md)、[`chrwme-structure-state-classifier`](../chrwme-trading-system/references/modules/chrwme-structure-state-classifier.md)。
 
 ## 2. 结构语言：CHoCH、MSS、BOS 不是同义词
 
@@ -28,7 +28,7 @@
 
 任何结构标签都应同时记录：被突破的具体摆动点、突破方式、收盘位置、位移质量、前置流动性事件，以及什么新证据会推翻当前分类。若这些字段缺失，最诚实的输出是“证据不足”，而不是补全故事。
 
-对应 skill：[`chrwme-structure-state-classifier`](../chrwme-structure-state-classifier/SKILL.md)。
+对应模块：[`chrwme-structure-state-classifier`](../chrwme-trading-system/references/modules/chrwme-structure-state-classifier.md)。
 
 ## 3. 流动性扫取：事件之后必须分流
 
@@ -40,7 +40,7 @@
 
 因此，Sweep 的正确用途是启动路由，而不是直接下单。需要观察刺穿后是否收回、是否出现明确位移、是否破坏有意义的结构，以及回撤位置是否存在合格的价格数组。仅有影线或仅有“扫了前高/前低”的叙述，都不足以判定反转。
 
-对应 skill：[`chrwme-liquidity-sweep-router`](../chrwme-liquidity-sweep-router/SKILL.md)。
+对应模块：[`chrwme-liquidity-sweep-router`](../chrwme-trading-system/references/modules/chrwme-liquidity-sweep-router.md)。
 
 ## 4. PD Array：定义正确不等于可以交易
 
@@ -52,7 +52,7 @@ Order Block、Fair Value Gap 和 Breaker 容易被当作静态矩形，但资料
 
 质量过滤至少包括定义是否成立、形成原因、所在区间位置、与当前结构方向是否一致、是否已经被反复消耗，以及失效条件。PD Array 是安排回撤和风险位置的候选区域，不是独立信号。
 
-对应 skill：[`chrwme-pd-array-quality-filter`](../chrwme-pd-array-quality-filter/SKILL.md)。
+对应模块：[`chrwme-pd-array-quality-filter`](../chrwme-trading-system/references/modules/chrwme-pd-array-quality-filter.md)。
 
 ## 5. 五阶段模型：用缺失条件约束叙事
 
@@ -60,7 +60,7 @@ Order Block、Fair Value Gap 和 Breaker 容易被当作静态矩形，但资料
 
 执行时应逐项标注“已出现、未出现、无法判断”，并明确缺失的关键条件。例如，已经扫低但没有向上位移，只能说第一阶段可能出现；已经位移但没有破坏关键结构，也不能跳到回撤执行。阶段标签必须能够被后续价格行为推翻。
 
-对应 skill：[`chrwme-five-stage-market-cycle`](../chrwme-five-stage-market-cycle/SKILL.md)。
+对应模块：[`chrwme-five-stage-market-cycle`](../chrwme-trading-system/references/modules/chrwme-five-stage-market-cycle.md)。
 
 ## 6. PDH/PDL：动态工作区间，不是永久支撑阻力
 
@@ -72,7 +72,7 @@ Order Block、Fair Value Gap 和 Breaker 容易被当作静态矩形，但资料
 
 前日边界反转需要条件链：价格到达有意义的边界或流动性位置，发生扫取或测试，随后出现反向位移和结构确认，再等待合格回撤区域。缺少任一关键环节时，都应输出等待或失效，而不是“靠近边界就反向”。目标也不能机械地设为区间另一端；应结合途中结构、流动性和风险收益约束。
 
-对应 skills：[`chrwme-dynamic-working-range`](../chrwme-dynamic-working-range/SKILL.md)、[`chrwme-pdh-pdl-reversal-executor`](../chrwme-pdh-pdl-reversal-executor/SKILL.md)。
+对应模块：[`chrwme-dynamic-working-range`](../chrwme-trading-system/references/modules/chrwme-dynamic-working-range.md)、[`chrwme-pdh-pdl-reversal-executor`](../chrwme-trading-system/references/modules/chrwme-pdh-pdl-reversal-executor.md)。
 
 ## 7. Wyckoff：事件链优先于图形相似
 
@@ -80,7 +80,7 @@ Order Block、Fair Value Gap 和 Breaker 容易被当作静态矩形，但资料
 
 初始区间的后半程与趋势中的再积累、再派发也应分开。判断重点包括此前是否已有明确趋势、当前区间在更大结构中的位置、突破方向和回测表现。Wyckoff 分类描述的是供需演化假说，不等同于作者五阶段执行模型；二者可以互相提供背景，但不能互相替代。
 
-对应 skills：[`chrwme-wyckoff-range-classifier`](../chrwme-wyckoff-range-classifier/SKILL.md)、[`chrwme-wyckoff-phase-router`](../chrwme-wyckoff-phase-router/SKILL.md)。
+对应模块：[`chrwme-wyckoff-range-classifier`](../chrwme-trading-system/references/modules/chrwme-wyckoff-range-classifier.md)、[`chrwme-wyckoff-phase-router`](../chrwme-trading-system/references/modules/chrwme-wyckoff-phase-router.md)。
 
 ## 8. 风险：从失效点反推仓位
 
@@ -92,7 +92,7 @@ Order Block、Fair Value Gap 和 Breaker 容易被当作静态矩形，但资料
 
 如果缺少账户规模、风险上限、点值、合约乘数、手续费或滑点数据，skill 应指出缺失字段，而不是编造精确仓位。结构止损也不保证成交价格等于计划价格；跳空、流动性和市场冲击仍需单独考虑。
 
-对应 skill：[`chrwme-invalidation-risk-sizing`](../chrwme-invalidation-risk-sizing/SKILL.md)。
+对应模块：[`chrwme-invalidation-risk-sizing`](../chrwme-trading-system/references/modules/chrwme-invalidation-risk-sizing.md)。
 
 ## 9. 证据：从漂亮案例走向可更新系统
 
@@ -102,7 +102,7 @@ Order Block、Fair Value Gap 和 Breaker 容易被当作静态矩形，但资料
 
 更重要的是建立证据循环：冻结规则版本，使用一致的数据和费用假设回测，保留样本外区间，再进行前向测试，记录偏差与执行错误，最后只在有证据时修改规则。小样本的正期望、只展示成功案例或在同一数据上反复调参，都不能证明稳定优势。
 
-对应 skill：[`chrwme-expectancy-evidence-loop`](../chrwme-expectancy-evidence-loop/SKILL.md)。
+对应模块：[`chrwme-expectancy-evidence-loop`](../chrwme-trading-system/references/modules/chrwme-expectancy-evidence-loop.md)。
 
 ## 10. 一次完整分析应该怎样输出
 
@@ -143,12 +143,12 @@ Order Block、Fair Value Gap 和 Breaker 容易被当作静态矩形，但资料
 
 对于一张待分析图表，可按以下顺序调用：
 
-1. [`chrwme-top-down-analysis-funnel`](../chrwme-top-down-analysis-funnel/SKILL.md)
-2. [`chrwme-structure-state-classifier`](../chrwme-structure-state-classifier/SKILL.md)
-3. [`chrwme-liquidity-sweep-router`](../chrwme-liquidity-sweep-router/SKILL.md)
-4. [`chrwme-pd-array-quality-filter`](../chrwme-pd-array-quality-filter/SKILL.md)
+1. [`chrwme-top-down-analysis-funnel`](../chrwme-trading-system/references/modules/chrwme-top-down-analysis-funnel.md)
+2. [`chrwme-structure-state-classifier`](../chrwme-trading-system/references/modules/chrwme-structure-state-classifier.md)
+3. [`chrwme-liquidity-sweep-router`](../chrwme-trading-system/references/modules/chrwme-liquidity-sweep-router.md)
+4. [`chrwme-pd-array-quality-filter`](../chrwme-trading-system/references/modules/chrwme-pd-array-quality-filter.md)
 5. 根据场景选择五阶段、PDH/PDL 或 Wyckoff 分支
-6. [`chrwme-invalidation-risk-sizing`](../chrwme-invalidation-risk-sizing/SKILL.md)
-7. [`chrwme-expectancy-evidence-loop`](../chrwme-expectancy-evidence-loop/SKILL.md)
+6. [`chrwme-invalidation-risk-sizing`](../chrwme-trading-system/references/modules/chrwme-invalidation-risk-sizing.md)
+7. [`chrwme-expectancy-evidence-loop`](../chrwme-trading-system/references/modules/chrwme-expectancy-evidence-loop.md)
 
 这 11 个 skills 的共同约束是：把事实、推断和未知分开；给每个结论提供失效条件；在缺少必要输入时停止补全；把风险控制和证据质量放在术语叙事之前。

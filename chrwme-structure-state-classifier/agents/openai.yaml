@@ -1,4 +1,0 @@
-interface:
-  display_name: "Chrwme 结构状态判别"
-  short_description: "区分 CHoCH、MSS 与 BOS 的结构证据"
-  default_prompt: "Use $chrwme-structure-state-classifier to classify this break as CHoCH, MSS, BOS, or unconfirmed."
