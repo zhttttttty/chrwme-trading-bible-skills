@@ -11,6 +11,17 @@
 - 在账户、合约或费用参数缺失时编造仓位；
 - 把教学图或少量回测结果当作已证明的交易优势。
 
+## 一体化版本（推荐）
+
+[`chrwme-trading-system`](chrwme-trading-system/SKILL.md) 是一个可单独安装的总 skill。它把下面 11 个能力放在自己的 `references/modules/` 中，并根据用户问题自动选择最小模块集合：
+
+- 简单问题通常只读取 1 个模块；
+- PDH/PDL 反转等复合问题会按“背景 → 结构 → Sweep → 场景 → 风险”的依赖顺序组合模块；
+- 输入不足时在当前关卡停止，不让后续模块编造入场、仓位或统计结论；
+- 最终只输出一份合并后的分析，不把 11 份回答直接堆给用户。
+
+因此，普通用户只安装 `chrwme-trading-system` 即可。仓库中的 11 个独立 skill 继续保留，供开发、调试或希望手动调用单一能力的用户使用。
+
 ## Skills
 
 | Skill | 用途 |
@@ -43,7 +54,15 @@ Top-down 背景
 
 ## 安装
 
-### 安装全部 skills
+### 安装一体化版本（推荐）
+
+```powershell
+Copy-Item -LiteralPath '.\chrwme-trading-system' `
+  -Destination (Join-Path $env:USERPROFILE '.codex\skills') `
+  -Recurse
+```
+
+### 安装全部独立 skills
 
 克隆仓库后，在 PowerShell 中运行：
 
@@ -75,6 +94,23 @@ Copy-Item -LiteralPath '.\chrwme-liquidity-sweep-router' `
 
 ## 结构
 
+一体化版本：
+
+```text
+chrwme-trading-system/
+├── SKILL.md
+├── agents/
+│   └── openai.yaml
+├── references/
+│   ├── composition-patterns.md
+│   └── modules/
+│       └── 11 个内部模块
+├── test-prompts.json
+└── test-results.md
+```
+
+独立版本：
+
 每个 skill 目录包含：
 
 ```text
@@ -97,6 +133,7 @@ chrwme-*/
 - 每个 skill 包含 6 条测试，共 66 条。
 - 测试由三组独立子代理进行盲测，最终 66/66 通过。
 - 其中包含 22 条相邻 skill 混淆用例，用于验证拒绝和路由能力。
+- 一体化 `chrwme-trading-system` 也通过 `quick_validate.py`，包含 12 条组合路由、拒绝和缺失输入测试。
 
 这些测试验证的是 skill 的触发、拒绝和执行边界，不证明交易方法本身具有统计优势。
 

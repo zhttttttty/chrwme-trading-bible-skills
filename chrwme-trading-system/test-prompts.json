@@ -1,0 +1,91 @@
+{
+  "skill": "chrwme-trading-system",
+  "version": "0.1.0",
+  "test_cases": [
+    {
+      "id": "route-01",
+      "type": "should_trigger",
+      "prompt": "价格扫过 PDL 后站回，4H 偏多，5m 出现位移，但我不确定是否已经是 MSS，也想知道止损和仓位怎么算。",
+      "expected_modules": ["top-down-analysis-funnel", "dynamic-working-range", "liquidity-sweep-router", "structure-state-classifier", "pdh-pdl-reversal-executor", "invalidation-risk-sizing"],
+      "expected_behavior": "按依赖顺序检查上下文、区间、Sweep、结构、反转条件与风险；缺少合约参数时停止精确仓位。"
+    },
+    {
+      "id": "route-02",
+      "type": "should_trigger",
+      "prompt": "这三根 K 线算不算 FVG？如果是，碰到就能买吗？",
+      "expected_modules": ["pd-array-quality-filter"],
+      "expected_behavior": "核对机械定义与上下文，并拒绝把触碰区域自动当作入场。"
+    },
+    {
+      "id": "route-03",
+      "type": "should_trigger",
+      "prompt": "影线刺破前高后收回，这是 CHoCH、MSS 还是 BOS？",
+      "expected_modules": ["structure-state-classifier"],
+      "expected_behavior": "检查相关 Swing、收盘与位移；证据不足时输出未确认。"
+    },
+    {
+      "id": "route-04",
+      "type": "should_trigger",
+      "prompt": "上涨趋势已经走了一段，现在高位又形成新 TR，这是原吸筹后半程还是 reaccumulation？",
+      "expected_modules": ["wyckoff-range-classifier", "wyckoff-phase-router"],
+      "expected_behavior": "先确认初始区间分类，再根据已建立趋势和新位置判断再积累。"
+    },
+    {
+      "id": "route-05",
+      "type": "should_trigger",
+      "prompt": "账户 20000 美元，止损 18 点，每点 5 美元，我最多接受亏损 100 美元，仓位上限是多少？",
+      "expected_modules": ["invalidation-risk-sizing"],
+      "expected_behavior": "使用用户已批准的亏损金额和真实点值计算，并提醒费用与滑点。"
+    },
+    {
+      "id": "route-06",
+      "type": "should_trigger",
+      "prompt": "回测 120 笔，胜率 42%，平均赢 2.1R，平均亏 1R，含费用后有优势吗？下一步怎么前测？",
+      "expected_modules": ["expectancy-evidence-loop"],
+      "expected_behavior": "计算费用后期望值并规划样本外与前向测试，不承诺未来盈利。"
+    },
+    {
+      "id": "route-07",
+      "type": "should_trigger",
+      "prompt": "日线向上但 5 分钟出现空头 CHoCH，我应该听哪个周期？",
+      "expected_modules": ["top-down-analysis-funnel", "structure-state-classifier"],
+      "expected_behavior": "分配周期职责，并把低周期变化放回交易时域和高周期位置中解释。"
+    },
+    {
+      "id": "route-08",
+      "type": "should_trigger",
+      "prompt": "按 Chrwme 的 bullish model，现在只出现向下扩张，还没反转，属于第几阶段？",
+      "expected_modules": ["five-stage-market-cycle"],
+      "expected_behavior": "映射当前阶段并列出尚未出现的反转与结构条件。"
+    },
+    {
+      "id": "reject-01",
+      "type": "should_not_trigger",
+      "prompt": "请根据英伟达最新财报和估值判断明年合理股价。",
+      "expected_modules": [],
+      "expected_behavior": "不使用本 skill；路由到基本面和最新数据研究。"
+    },
+    {
+      "id": "reject-02",
+      "type": "should_not_trigger",
+      "prompt": "帮我查询 BTC 现在的实时价格。",
+      "expected_modules": [],
+      "expected_behavior": "不使用本 skill 获取实时行情；使用实时数据工具。"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "我的止损是 0.8%，帮我算黄金应该开多少手。",
+      "expected_modules": ["invalidation-risk-sizing"],
+      "expected_behavior": "要求账户允许亏损、合约乘数、点值、费用和结构失效信息；不得猜数。"
+    },
+    {
+      "id": "edge-02",
+      "type": "edge_case",
+      "prompt": "只有一张没有周期标记的截图，告诉我精确进场、止损和目标。",
+      "expected_modules": ["top-down-analysis-funnel"],
+      "expected_behavior": "指出时间周期和结构信息不足，只给可验证的补充信息清单。"
+    }
+  ],
+  "minimum_pass_rate": 0.8
+}

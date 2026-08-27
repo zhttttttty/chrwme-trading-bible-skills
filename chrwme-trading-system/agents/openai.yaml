@@ -1,0 +1,6 @@
+interface:
+  display_name: "Chrwme Trading System"
+  short_description: "按需路由并组合 11 个 Chrwme 交易分析模块"
+  default_prompt: "Use $chrwme-trading-system to analyze this market scenario and load only the relevant internal modules."
+policy:
+  allow_implicit_invocation: true
