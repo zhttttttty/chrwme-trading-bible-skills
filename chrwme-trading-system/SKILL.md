@@ -8,7 +8,7 @@ description: >-
   applies. Load only the relevant internal modules. Not for live-price lookup,
   news/fundamental analysis, or profit guarantees.
 metadata:
-  version: "0.1.0"
+  version: "0.2.0"
   source: "Chrwme Trading Bible Technical Revision"
   architecture: "single skill with routed internal modules"
 ---
@@ -62,6 +62,12 @@ descriptive metadata; apply the module's Markdown body inside this parent skill.
 | Reaccumulation/redistribution versus initial range | [`wyckoff-phase-router`](references/modules/chrwme-wyckoff-phase-router.md) |
 | Invalidation, stop distance, and position-size inputs | [`invalidation-risk-sizing`](references/modules/chrwme-invalidation-risk-sizing.md) |
 | Expectancy, backtest, forward test, and evidence updates | [`expectancy-evidence-loop`](references/modules/chrwme-expectancy-evidence-loop.md) |
+
+For a quantified example of translating the PDL event chain into frozen Nasdaq
+futures research rules, read
+[`nasdaq-futures-pdl-case-study.md`](references/nasdaq-futures-pdl-case-study.md)
+only when the user asks about Nasdaq futures, partial exits, or backtest design.
+Treat it as a case study rather than an additional canonical module.
 
 Do not load all modules by default. A narrow terminology question usually needs
 one module. An end-to-end trade-plan review may need several modules in stages.

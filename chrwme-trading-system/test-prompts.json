@@ -1,6 +1,6 @@
 {
   "skill": "chrwme-trading-system",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "test_cases": [
     {
       "id": "route-01",
@@ -57,6 +57,14 @@
       "prompt": "按 Chrwme 的 bullish model，现在只出现向下扩张，还没反转，属于第几阶段？",
       "expected_modules": ["five-stage-market-cycle"],
       "expected_behavior": "映射当前阶段并列出尚未出现的反转与结构条件。"
+    },
+    {
+      "id": "route-09",
+      "type": "should_trigger",
+      "prompt": "把 Chrwme 的 PDL 反转用于纳斯达克期货，并比较 2R 分批止盈和全仓奔跑的十年回测；请说明 IBKR 数据不足时能否用指数代理。",
+      "expected_modules": ["expectancy-evidence-loop", "invalidation-risk-sizing"],
+      "expected_reference": "nasdaq-futures-pdl-case-study",
+      "expected_behavior": "冻结并披露规则版本，分别报告分批和全仓的收益、回撤及尾部集中度；严格区分真实期货、连续合约和代理数据，不把案例参数写成默认建议。"
     },
     {
       "id": "reject-01",

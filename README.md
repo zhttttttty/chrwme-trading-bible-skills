@@ -11,6 +11,10 @@
 - 在账户、合约或费用参数缺失时编造仓位；
 - 把教学图或少量回测结果当作已证明的交易优势。
 
+仓库还包含一个独立的
+[`Nasdaq Futures PDL Reversal Research Case`](chrwme-trading-system/references/nasdaq-futures-pdl-case-study.md)，
+示范如何把周线背景、PDL Sweep、两小时位移、结构止损和分批退出写成可复现规则，并把真实期货、连续合约与代理数据的证据边界分开。它是研究案例，不是第 12 个理论模块，也不是默认参数或交易建议。
+
 ## 一体化版本（推荐）
 
 [`chrwme-trading-system`](chrwme-trading-system/SKILL.md) 是一个可单独安装的总 skill。它把下面 11 个能力放在自己的 `references/modules/` 中，并根据用户问题自动选择最小模块集合：
@@ -81,6 +85,7 @@ chrwme-trading-system/
 │   └── openai.yaml
 ├── references/
 │   ├── composition-patterns.md
+│   ├── nasdaq-futures-pdl-case-study.md
 │   └── modules/
 │       └── 11 个内部模块
 ├── test-prompts.json
@@ -90,6 +95,7 @@ chrwme-trading-system/
 - `SKILL.md`：总入口、自动路由、依赖顺序和停止条件。
 - `agents/openai.yaml`：Codex 展示与调用元数据。
 - `references/modules/`：11 个内部分析模块。
+- `references/nasdaq-futures-pdl-case-study.md`：量化规则、分批退出与数据源边界的实证案例。
 - `test-prompts.json`：组合路由、拒绝和缺失输入用例。
 - `test-results.md`：总入口路由审计结果。
 
@@ -97,7 +103,7 @@ chrwme-trading-system/
 
 - 打包前，11 个模块来源均通过 Codex `quick_validate.py`。
 - 原子模块阶段共完成 66 条独立盲测，最终 66/66 通过，其中包含 22 条相邻模块混淆用例。
-- 当前发布的一体化 `chrwme-trading-system` 通过 `quick_validate.py`，并包含 12 条组合路由、拒绝和缺失输入测试。
+- 当前发布的一体化 `chrwme-trading-system` 通过 `quick_validate.py`，并包含 13 条组合路由、拒绝和缺失输入测试。
 
 这些测试验证的是 skill 的触发、拒绝和执行边界，不证明交易方法本身具有统计优势。
 

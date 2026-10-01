@@ -65,6 +65,13 @@ Use `expectancy-evidence-loop`. Add `invalidation-risk-sizing` only when the use
 is defining a repeatable risk model. A chart classification module is unnecessary
 unless the strategy's setup definition itself is under review.
 
+For a Nasdaq-futures PDL-reversal study or a partial-exit comparison, also read
+[`nasdaq-futures-pdl-case-study.md`](nasdaq-futures-pdl-case-study.md). Reuse its
+reporting and evidence-separation method, not its numerical parameters as
+defaults. Keep actual futures, continuous futures, and proxy price paths in
+separate result tables. When comparing all-in/all-out with scaled exits, report
+drawdown and tail-profit concentration alongside return and win rate.
+
 ## Minimal-answer rule
 
 For a narrow question, use one primary module and answer directly. Mention other
