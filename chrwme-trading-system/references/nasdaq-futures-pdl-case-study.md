@@ -37,13 +37,16 @@ defaults for another user, instrument, or account.
    - Enter on the next chronological 30-minute bar after confirmation.
    - Initial stop: confirmation-bar low minus `0.1 × ATR(14)` of the two-hour
      series. This is a quantified research proxy for structural invalidation.
-   - Position size is the largest whole MNQ contract count not exceeding the
-     user-specified account-risk cap after estimated round-trip commissions and
-     stop slippage. The study tested 1% and 0.5%; neither is a recommendation.
+   - Position size is the largest whole MNQ contract count not exceeding both
+     the account-risk cap and a 2.0-times gross-notional leverage cap after
+     estimated round-trip commissions and stop slippage.
+   - Round fills to the 0.25-point MNQ tick in the adverse direction.
 5. **Partial exit and runner**
-   - At `+2R`, sell 75% of the initial quantity while retaining at least one
+   - At `+2R`, sell 25% of the initial quantity while retaining at least one
      contract when position size permits.
-   - Move the remaining stop to the entry price.
+   - Do not automatically move the remaining stop to entry. After the partial,
+     trail below newly confirmed two-hour swing lows with a `0.1 × ATR(14)`
+     buffer; never loosen the stop or backdate a swing confirmation.
    - Exit the runner after an RTH daily close below the preceding five-day low,
      when the weekly regime turns off, or after 60 trading days.
    - Monitor protective stops across the available 24-hour session.
@@ -62,55 +65,59 @@ bar, preventing same-close execution and obvious look-ahead.
 - Bid-only proxy data cannot model bid/ask spread dynamics, exchange fees,
   market impact, limit-order queue position, or roll execution exactly.
 
-## Evidence snapshot (research run dated 2026-10-01)
+## Evidence snapshot (causal correction dated 2026-10-02)
 
 Only the rule specification and aggregate research snapshot are committed here.
 Vendor price files and full trade logs are not redistributed, so the figures
 below are provenance-labeled observations rather than independently reproducible
 repository tests.
 
-### Ten-year proxy path
+### Superseded result notice
+
+The 2026-10-01 snapshot previously published here was invalid. Its resampling
+code labeled a completed two-hour aggregate with the timestamp of its first
+30-minute component. The simulator could therefore enter 90 minutes before the
+aggregate was observable. In the 109-trade run, 106 entries had this timing
+leak. The previously reported 222.46% base return, related five-year variants,
+and the one-year IBKR cross-check are withdrawn rather than treated as evidence.
+A closed-trade arithmetic audit did not and could not detect this causal error.
+
+### Corrected ten-year proxy path
 
 Period: 2016-10-03 through 2026-09-30. Source: Dukascopy `USATECHIDXUSD`
 30-minute bid bars, used as a Nasdaq-100 price-path proxy and sized as MNQ. This
 is not a CME NQ/MNQ continuous-futures history.
 
-| Variant | Trades | Total return | CAGR | Max drawdown | Profit factor |
+All variants below use causal two-hour aggregation, discard incomplete RTH tail
+windows, round fills to 0.25 point, cap gross entry leverage at 2.0 times, charge
+USD 1.25 per contract per side, and apply 0.5 point adverse slippage per fill.
+
+| Exit variant | Trades | Total return | CAGR | Max drawdown | Profit factor |
 |---|---:|---:|---:|---:|---:|
-| 1% risk, 2R sell 75%, runner | 109 | 222.46% | 12.43% | -5.68% | 4.584 |
-| 0.5% risk, same exit | 109 | 77.58% | 5.91% | -2.96% | 4.814 |
-| 1% risk, 1-point slippage | 109 | 206.55% | 11.86% | -5.42% | 4.446 |
-| 1% risk, no partial exit | 100 | 639.35% | 22.16% | -22.25% | 3.251 |
+| 2R sell 75%, then breakeven | 89 | 30.73% | 2.72% | -6.39% | 1.62 |
+| 2R sell 50%, structural trail | 102 | 50.42% | 4.17% | -5.60% | 1.77 |
+| 2R sell 25%, structural trail | 102 | 62.55% | 4.98% | -6.42% | 1.89 |
 
-The no-partial version had much greater convex upside but materially larger
-drawdown and concentration: its five largest winners supplied 75.61% of net
-profit, versus 25.61% for the partial-exit version. Therefore, a partial exit
-should be described as a return-distribution choice, not an unconditional
-performance improvement.
+For the 25% partial version, win rate was 42.16%, exposure 15.71%, and maximum
+observed gross entry leverage 1.998 times. The bundled closed-trade auditor
+recomputed USD 62,548 net profit, 1.885874 profit factor, USD 613.22 expectancy
+per trade, seven consecutive losses, and 62.59% of net profit from the five
+largest winners. Its -5.03% trade-close drawdown is not the same as the -6.42%
+bar-level mark-to-market drawdown.
 
-The bundled trade-log auditor recomputed 109 trades, profit factor 4.584154,
-top-five contribution 25.614521%, and -2.878243% **trade-close** drawdown from
-the source closed-trade log during the repository update. The bar-level equity
-curve drawdown above is -5.68%; the difference demonstrates why realized
-trade-close drawdown must not be presented as mark-to-market drawdown. The
-vendor data and source trade log are not committed, so this remains a provenance
-note rather than an independently executable repository fixture.
+The 25% result is an in-sample exit-policy comparison, not independent proof that
+25% generalizes. Returns were negative in 2022, 2025, and the partial 2026 year.
+It requires held-out or forward testing on licensed futures data before any edge
+claim.
 
-### Five-year nested proxy window
+### Rejected continuation experiment
 
-For 2021-10-01 through 2026-09-30, the 1% partial-exit version returned 44.10%
-with -4.62% maximum drawdown; the no-partial version returned 41.69% with
--16.14% maximum drawdown. This window is nested inside the ten-year sample and
-must not be counted as independent confirmation.
-
-### One-year IBKR MNQ cross-check
-
-For approximately 2025-10-01 through 2026-10-01, actual IBKR MNQ continuous
-30-minute bars produced 8 trades, 9.94% total return, -6.74% maximum drawdown,
-and profit factor 5.065 under the 1% partial-exit rules. The proxy path over the
-overlapping year returned 12.82% with -4.16% drawdown. Direction agreed, but the
-proxy was more favorable, so do not splice or present the proxy result as actual
-futures performance.
+An optional branch bought a bullish daily breakout of the prior 20-day high only
+after a later daily retest held that level and a two-hour displacement confirmed.
+It added 19 trades but those trades lost USD 13,698.40 in this sample; the combined
+model returned 31.79% with -9.46% drawdown before the final tick-rounding rerun.
+The branch is disabled and is not part of the frozen candidate. These figures are
+diagnostic only because that branch did not receive the final execution rerun.
 
 IBKR documents that expired-futures data older than two years from expiration is
 unavailable, and continuous-futures requests in current TWS/IB Gateway releases
@@ -122,7 +129,8 @@ ten-year intraday CME series from the tested Gateway alone:
 
 ## Interpretation rules
 
-- The five- and ten-year proxy windows overlap and are not independent samples.
+- The corrected exit variants share the same ten-year development sample and are
+  parameter comparisons, not three independent confirmations.
 - The rule set was developed using recent data before the ten-year extension;
   longer history reduces, but does not remove, selection bias.
 - A partial winner followed by a breakeven runner counts as a profitable trade;
@@ -142,5 +150,6 @@ ten-year intraday CME series from the tested Gateway alone:
 Use the generic [`Backtest Evidence Standard`](backtest-evidence-standard.md) for
 the reporting template, evidence tiers, validation labels, exit-policy comparison,
 and stopping gates. Keep this file focused on the Nasdaq PDL research instance.
+
 
 
