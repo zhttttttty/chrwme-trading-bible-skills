@@ -8,7 +8,7 @@ description: >-
   applies. Load only the relevant internal modules. Not for live-price lookup,
   news/fundamental analysis, or profit guarantees.
 metadata:
-  version: "0.2.0"
+  version: "0.3.0"
   source: "Chrwme Trading Bible Technical Revision"
   architecture: "single skill with routed internal modules"
 ---
@@ -63,11 +63,17 @@ descriptive metadata; apply the module's Markdown body inside this parent skill.
 | Invalidation, stop distance, and position-size inputs | [`invalidation-risk-sizing`](references/modules/chrwme-invalidation-risk-sizing.md) |
 | Expectancy, backtest, forward test, and evidence updates | [`expectancy-evidence-loop`](references/modules/chrwme-expectancy-evidence-loop.md) |
 
+For any quantified strategy-performance request, read
+[`backtest-evidence-standard.md`](references/backtest-evidence-standard.md) before
+interpreting headline metrics. If the user supplies a closed-trade CSV, use the
+bundled `scripts/audit_trade_log.py` when its `pnl` field is available.
+
 For a quantified example of translating the PDL event chain into frozen Nasdaq
 futures research rules, read
 [`nasdaq-futures-pdl-case-study.md`](references/nasdaq-futures-pdl-case-study.md)
 only when the user asks about Nasdaq futures, partial exits, or backtest design.
-Treat it as a case study rather than an additional canonical module.
+Treat it as a case study rather than an additional canonical module, and also
+apply the generic backtest evidence standard.
 
 Do not load all modules by default. A narrow terminology question usually needs
 one module. An end-to-end trade-plan review may need several modules in stages.

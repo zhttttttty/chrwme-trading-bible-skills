@@ -1,8 +1,8 @@
 # Router test results — chrwme-trading-system
 
 - Test type: route-table and boundary audit
-- Cases: 13
-- Result: 13/13 passed
+- Cases: 14
+- Result: 14/14 passed
 
 | Case | Selected route | Result |
 |---|---|---|
@@ -15,6 +15,7 @@
 | route-07 | top-down → structure | PASS |
 | route-08 | five-stage cycle only | PASS |
 | route-09 | expectancy/evidence + risk; Nasdaq futures case reference | PASS |
+| route-10 | expectancy/evidence + evidence standard + trade-log audit script | PASS |
 | reject-01 | reject; fundamental research | PASS |
 | reject-02 | reject; live-price tool | PASS |
 | edge-01 | risk module, then stop for missing inputs | PASS |

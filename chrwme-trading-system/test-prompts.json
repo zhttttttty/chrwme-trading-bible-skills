@@ -1,6 +1,6 @@
 {
   "skill": "chrwme-trading-system",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "test_cases": [
     {
       "id": "route-01",
@@ -65,6 +65,15 @@
       "expected_modules": ["expectancy-evidence-loop", "invalidation-risk-sizing"],
       "expected_reference": "nasdaq-futures-pdl-case-study",
       "expected_behavior": "冻结并披露规则版本，分别报告分批和全仓的收益、回撤及尾部集中度；严格区分真实期货、连续合约和代理数据，不把案例参数写成默认建议。"
+    },
+    {
+      "id": "route-10",
+      "type": "should_trigger",
+      "prompt": "我有一个包含 pnl 列的逐笔交易 CSV。请审计胜率、PF、期望值、最大回撤和前五笔利润集中度，并判断能否进入前测。",
+      "expected_modules": ["expectancy-evidence-loop"],
+      "expected_reference": "backtest-evidence-standard",
+      "expected_script": "scripts/audit_trade_log.py",
+      "expected_behavior": "使用确定性脚本计算交易级指标，将已实现交易闭合回撤与逐K线盯市回撤区分，并在数据来源、成本或独立验证不足时停止 edge 声明。"
     },
     {
       "id": "reject-01",

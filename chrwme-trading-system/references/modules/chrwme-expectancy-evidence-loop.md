@@ -56,6 +56,7 @@ metadata:
 ## 相关 skills
 
 - composes-with: `chrwme-invalidation-risk-sizing` — 一致的单笔风险定义是可比较样本的前提。
+- evidence standard: [`backtest-evidence-standard.md`](../backtest-evidence-standard.md) — 所有量化绩效请求先用它核对规则冻结、数据层级、样本独立性、指标和压力测试。
 - case study: [`nasdaq-futures-pdl-case-study.md`](../nasdaq-futures-pdl-case-study.md) — 仅在 Nasdaq 期货、PDL 反转量化或分批退出研究请求中读取。
 
 ## 审计信息

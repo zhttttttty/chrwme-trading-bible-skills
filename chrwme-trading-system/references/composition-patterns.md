@@ -61,9 +61,12 @@ are missing.
 
 ## Strategy-performance request
 
-Use `expectancy-evidence-loop`. Add `invalidation-risk-sizing` only when the user
-is defining a repeatable risk model. A chart classification module is unnecessary
-unless the strategy's setup definition itself is under review.
+Use `expectancy-evidence-loop` and read
+[`backtest-evidence-standard.md`](backtest-evidence-standard.md). Add
+`invalidation-risk-sizing` only when the user is defining a repeatable risk
+model. A chart classification module is unnecessary unless the strategy's setup
+definition itself is under review. For a supplied closed-trade CSV, use
+`../scripts/audit_trade_log.py` to calculate the reproducible trade-level baseline.
 
 For a Nasdaq-futures PDL-reversal study or a partial-exit comparison, also read
 [`nasdaq-futures-pdl-case-study.md`](nasdaq-futures-pdl-case-study.md). Reuse its

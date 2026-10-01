@@ -4,6 +4,8 @@ Use this reference only when a user asks for a quantified Nasdaq-futures example
 partial-exit comparison, or a template for turning the Chrwme event chain into
 testable rules. It is an empirical case study, not a canonical Chrwme rule set,
 a live signal, or evidence that the same parameters generalize to another market.
+Apply the generic [`Backtest Evidence Standard`](backtest-evidence-standard.md)
+when reusing or extending this study.
 
 ## Research question
 
@@ -62,6 +64,11 @@ bar, preventing same-close execution and obvious look-ahead.
 
 ## Evidence snapshot (research run dated 2026-10-01)
 
+Only the rule specification and aggregate research snapshot are committed here.
+Vendor price files and full trade logs are not redistributed, so the figures
+below are provenance-labeled observations rather than independently reproducible
+repository tests.
+
 ### Ten-year proxy path
 
 Period: 2016-10-03 through 2026-09-30. Source: Dukascopy `USATECHIDXUSD`
@@ -80,6 +87,14 @@ drawdown and concentration: its five largest winners supplied 75.61% of net
 profit, versus 25.61% for the partial-exit version. Therefore, a partial exit
 should be described as a return-distribution choice, not an unconditional
 performance improvement.
+
+The bundled trade-log auditor recomputed 109 trades, profit factor 4.584154,
+top-five contribution 25.614521%, and -2.878243% **trade-close** drawdown from
+the source closed-trade log during the repository update. The bar-level equity
+curve drawdown above is -5.68%; the difference demonstrates why realized
+trade-close drawdown must not be presented as mark-to-market drawdown. The
+vendor data and source trade log are not committed, so this remains a provenance
+note rather than an independently executable repository fixture.
 
 ### Five-year nested proxy window
 
@@ -122,18 +137,10 @@ ten-year intraday CME series from the tested Gateway alone:
   practical, run walk-forward or held-out tests, and forward-test fills and roll
   behavior. A favorable historical case does not prove a durable edge.
 
-## Reusable reporting template
+## Reuse boundary
 
-When reporting a similar study, include:
-
-1. Exact setup, confirmation, cancellation, entry, stop, partial, runner, and
-   time-exit rules.
-2. Trading-day boundary, RTH definition, timezone, and bar-construction method.
-3. Instrument identity, contract multiplier, roll method, data vendor, and
-   whether the series is actual, continuous, back-adjusted, or a proxy.
-4. Fees, slippage, spread assumptions, fill ordering, and whole-contract rules.
-5. Sample dates, trades, return, CAGR, maximum drawdown, profit factor, exposure,
-   yearly returns, and best-trade/top-five profit concentration.
-6. Frozen-parameter stress tests and a genuinely independent forward-test plan.
+Use the generic [`Backtest Evidence Standard`](backtest-evidence-standard.md) for
+the reporting template, evidence tiers, validation labels, exit-policy comparison,
+and stopping gates. Keep this file focused on the Nasdaq PDL research instance.
 
 
