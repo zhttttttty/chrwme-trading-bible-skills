@@ -20,6 +20,12 @@ Execute signals on the next eligible observation unless the rule explicitly
 models a realizable order at the current close. Do not use completed daily or
 weekly information before that period has closed.
 
+For resampled intraday bars, record both the interval start and the time at which
+the bar is fully observable. A bar assembled from 09:30, 10:00, 10:30, and 11:00
+30-minute observations is not known until 11:30. It must not generate an entry
+before 11:30. Reject incomplete tail windows and test this invariant against
+every simulated entry; a correct trade-log sum cannot detect a timing leak.
+
 ## 2. Label the evidence tier
 
 Keep these data types separate:
@@ -100,4 +106,5 @@ python scripts/audit_trade_log.py trades.csv --initial-equity 100000
 The script uses only the Python standard library. It reports realized trade-level
 metrics and does not alter the source file. Read its limitations in the JSON
 output; it cannot reconstruct intratrade drawdown from closed-trade rows.
+
 
